@@ -8,12 +8,12 @@ const state = localStorage.getItem('feedback-form-state') ? JSON.parse(localStor
 
 if (localStorage.getItem("feedback-form-state") !== null) {
     const { email, message } = JSON.parse(localStorage.getItem('feedback-form-state'))
-    form.email.value = email;
-    form.message.value = message;
+    form.email.value = email ? email : '';
+    form.message.value = message ? message : '';
 }
 
-email.addEventListener('input', e => handleInput(e))
-message.addEventListener('input', e => handleInput(e))
+email.addEventListener('input', throttle(e => handleInput(e),500))
+message.addEventListener('input', throttle(e => handleInput(e),500))
 form.addEventListener('submit', e => clearSubmitForm(e))
 
 function handleInput(e) {
